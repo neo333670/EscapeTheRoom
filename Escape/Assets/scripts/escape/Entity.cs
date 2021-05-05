@@ -38,4 +38,12 @@ public class Entity {
 	
 		Debug.Log ("Nothing happened.");
 	}
+	public virtual void Select() {
+		OnSelected(this);
+	}
+
+    public virtual void DeSelect()
+    {
+		OnDeselected(this);
+    }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class EscapeGameScene : MonoBehaviour {
 
 	EscapeGame m_Game;
+	public const float SELECT_RANGE = 10f;
+
 	#region Message Event Handlers
 	void HandleOnMessageAdded(string message) { }
     #endregion
@@ -20,7 +22,12 @@ public class EscapeGameScene : MonoBehaviour {
 
 	#region Game Event Handlers
 	void HandleOnGameStrated(EscapeGame game) {
-		foreach (var e in m_Game.Entities) { 
+		foreach (var e in m_Game.Entities) {
+			//create Entities GameObject here
+			var entityBehav = GameObject.Instantiate(
+			Resources.Load<EntityBehav>("Prefabs/" + e.Prefabs));
+			entityBehav.transform.position = e.Position;
+			entityBehav.UpdateEntity(e);
 		}
 	}
 	void HandleOnGameFinished(EscapeGame game) { }
@@ -29,7 +36,7 @@ public class EscapeGameScene : MonoBehaviour {
     private void Awake()
     {
 		m_Game = new EscapeGame();
-		m_Game.OnGameStarted += HandleOnGameFinished;
+		m_Game.OnGameStarted += HandleOnGameStrated;
 		m_Game.OnGameFinished += HandleOnGameFinished;
 		m_Game.OnGameOver += HandleOnGameOver;
 
@@ -41,9 +48,15 @@ public class EscapeGameScene : MonoBehaviour {
 		m_Game.OnEntityInteracted += HandleOnEntityInteracted;
 		m_Game.OnEntityTaken += HandleOnEntityTaken;
 		m_Game.OnEntityReleased += HandleOnEntityReleased;
+
+		m_Game.MakeGame();
     }
 
     void Update () {
+
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			Detect();
+		}
 
 		if (Input.GetKeyDown (KeyCode.N)) {
 
@@ -61,5 +74,35 @@ public class EscapeGameScene : MonoBehaviour {
 
 			m_Game.PutBack ();
 		}
+	}
+
+	void Detect()
+	{
+		Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		bool detectEntity = false;
+
+		RaycastHit raycastHitResult;
+		Debug.DrawLine(Camera.main.transform.position,
+			Camera.main.transform.position + Camera.main.transform.forward * SELECT_RANGE, Color.green, 2);
+		if (Physics.Raycast(ray, out raycastHitResult))
+		{
+			if (raycastHitResult.distance < SELECT_RANGE)
+			{
+				var entityBehav = raycastHitResult.collider.GetComponent<EntityBehav>();
+
+				if (entityBehav != null)
+				{
+					detectEntity = true;
+					m_Game.SelectEntity(entityBehav.Entity);
+				}
+			}
+		}
+		if (!detectEntity)
+		{
+			SelectNothing();
+		}
+	}
+	void SelectNothing() {
+		m_Game.SelectEntity(null);
 	}
 }

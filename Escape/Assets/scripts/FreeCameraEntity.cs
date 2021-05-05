@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FreeCameraEntity : MonoBehaviour {
 
-	const float VELOCITY = 10f;
+	const float VELOCITY = 5f;
 
 	Vector3 m_MousePosition;
 
