@@ -18,7 +18,7 @@ public class ExitDoorEntity : DoorEntity {
 
 	protected override void Open () {
 
-		Debug.Log ("It's the right exit.");
+		m_Game.Showmsg("It's the right exit.");
 
 		Game.Escape ();
 	}
@@ -33,7 +33,7 @@ public class MonsterDoorEntity : DoorEntity {
 
 	protected override void Open () {
 
-		Debug.Log ("<color=red>You release a monster.</color>");
+		m_Game.Showmsg("<color=red>You release a monster.</color>");
 
 		Game.Die ();
 	}

@@ -19,7 +19,7 @@ public class Entity {
 	protected string m_Name;
 	public string Name { get { return m_Name; } }
 
-	EscapeGame m_Game;
+	protected EscapeGame m_Game;
 	public EscapeGame Game { get { return m_Game; } }
 
 	public Entity (EscapeGame game, string name, Vector3 pos) {
@@ -31,12 +31,13 @@ public class Entity {
 		
 	public virtual void Inspect () { 
 
-		Debug.Log ("Hmm...nothing special.");
+		m_Game.Showmsg("Hmm...nothing special.");
+		
 	}
 
 	public virtual void Interact (Entity entity = null) {
-	
-		Debug.Log ("Nothing happened.");
+
+		m_Game.Showmsg("Nothing happened.");
 	}
 	public virtual void Select() {
 		OnSelected(this);

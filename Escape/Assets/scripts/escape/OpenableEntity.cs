@@ -20,7 +20,7 @@ public class OpenableEntity : Entity {
 			return;
 		}
 
-		Debug.Log ("Use the right key to open this.");
+		m_Game.Showmsg("Use the right key to open this.");
 	}
 
 	public override void Interact (Entity entity = null) {
@@ -41,17 +41,17 @@ public class OpenableEntity : Entity {
 
 			} else {
 
-				Debug.Log (string.Format ("This item cannot be opened by the key <color=white>{0}</color>", key.Name));
+				m_Game.Showmsg(string.Format ("This item cannot be opened by the key <color=white>{0}</color>", key.Name));
 			}
 
 		} else {
 
-			Debug.Log ("You need a key to open it.");
+			m_Game.Showmsg("You need a key to open it.");
 		}
 	}
 
-	protected virtual void Open () { 
+	protected virtual void Open () {
 
-		Debug.Log ("Succeed to open the item, but nothing happened.");
+		m_Game.Showmsg("Succeed to open the item, but nothing happened.");
 	}
 }

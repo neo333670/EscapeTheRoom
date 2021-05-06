@@ -20,7 +20,8 @@ public class GameUI : MonoBehaviour
     }
     public void SetActionVisible(bool visible) { m_Action.SetActive(visible); }
 
-    public void Inspect() { m_EscapeGameScene.Game.Inspect(); }
+    public void Inspect() {
+        m_EscapeGameScene.Game.Inspect(); }
     public void Interact() { m_EscapeGameScene.Game.Interact(); }
 
     public void UseEntity() {

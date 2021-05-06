@@ -76,7 +76,7 @@ public class EscapeGameScene : MonoBehaviour {
     void Update () {
 
 		if (Input.GetKeyDown(KeyCode.P)) {
-			Detect();
+			DetectByplayer();
 		}
 
 		if (Input.GetKeyDown (KeyCode.N)) {
@@ -95,16 +95,18 @@ public class EscapeGameScene : MonoBehaviour {
 
 			m_Game.PutBack ();
 		}
+		if (Input.GetMouseButtonDown(0)) {
+			DetectByMouse();
+		}	
 	}
 
-	void Detect()
+	void DetectByplayer()
 	{
 		Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		bool detectEntity = false;
 
 		RaycastHit raycastHitResult;
-		Debug.DrawLine(Camera.main.transform.position,
-			Camera.main.transform.position + Camera.main.transform.forward * SELECT_RANGE, Color.green, 2);
+
 		if (Physics.Raycast(ray, out raycastHitResult))
 		{
 			if (raycastHitResult.distance < SELECT_RANGE)
@@ -123,6 +125,26 @@ public class EscapeGameScene : MonoBehaviour {
 			SelectNothing();
 		}
 	}
+
+	void DetectByMouse() {
+
+        bool detectEntity = false;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast(ray, out hit))
+		{
+			var entityBehav = hit.collider.GetComponent<EntityBehav>();
+
+			if (entityBehav != null)
+			{
+				detectEntity = true;
+				m_Game.SelectEntity(entityBehav.Entity);
+			}
+		}
+		if (!detectEntity) { SelectNothing(); }
+
+    }
 
 	void SelectNothing() {
 		m_Game.SelectEntity(null);

@@ -73,7 +73,6 @@ public class EscapeGame {
 			m_SelectedEntity.Inspect ();
 		
 		} else {
-
 			Showmsg("You have to select a item first.");
 		}
 	}
@@ -110,37 +109,6 @@ public class EscapeGame {
 		Showmsg(string.Format ("<color=white>{0}</color> has been selected.", m_SelectedEntity.Name));
 	}
 
-	public void Take (Entity entity) {
-
-		if (m_SelectedEntity != null) {
-			m_SelectedEntity.DeSelect();
-			m_SelectedEntity = null;
-		}
-
-		OnMessageAdded(string.Format("Take item <color=white>{0}</color>.", entity.Name));
-
-		m_Entities.Remove(entity);
-		m_TakenEntities.Add(entity);
-
-		entity.Take();
-		OnEntityTaken(entity);
-	}
-
-	public void PutBack (Entity entity = null) {
-		Showmsg(string.Format ("Put item <color=white>{0}</color> back.", entity.Name));
-
-		m_TakenEntities.Remove(entity);
-		m_Entities.Add(entity);
-
-		OnEntityReleased(entity);
-	}
-
-	void Deselect () {
-	
-		m_SelectedIndex = -1;
-		m_SelectedEntity = null;
-	}
-
 	public void Escape () {
 
 		Showmsg("<color=green>Congrats! You escape the room!</color>");
@@ -153,14 +121,15 @@ public class EscapeGame {
 		Finish ();
 	}
 
+	//3d function
 	public void SelectEntity(Entity entity) {
 		if (m_SelectedEntity == entity) {
 			return;
 		}
 		if (m_SelectedEntity != null) {
 			m_SelectedEntity.DeSelect();
-			OnEntityDeselected(m_SelectedEntity);
 
+			OnEntityDeselected(m_SelectedEntity);
 			m_SelectedEntity = null;
 		}
 		if (entity != null) {
@@ -169,11 +138,45 @@ public class EscapeGame {
 
 			OnEntitySelected(m_SelectedEntity);
 
-			OnMessageAdded(entity.Name + "has been selected");
+			Showmsg(entity.Name + " has been selected");
 		}
 	}
 
-	void Showmsg(string msg) {
+    public void Take(Entity entity)
+    {
+		Debug.Log("take ");
+        if (m_SelectedEntity == entity)
+        {
+            m_SelectedEntity.DeSelect();
+            m_SelectedEntity = null;
+        }
+
+        OnMessageAdded(string.Format("Take item <color=white>{0}</color>.", entity.Name));
+
+        m_Entities.Remove(entity);
+        m_TakenEntities.Add(entity);
+
+        entity.Take();
+        OnEntityTaken(entity);
+    }
+
+    public void PutBack(Entity entity = null)
+    {
+        Showmsg(string.Format("Put item <color=white>{0}</color> back.", entity.Name));
+
+        m_TakenEntities.Remove(entity);
+        m_Entities.Add(entity);
+
+        OnEntityReleased(entity);
+    }
+
+    void Deselect()
+    {
+        m_SelectedIndex = -1;
+        m_SelectedEntity = null;
+    }
+
+    public void Showmsg(string msg) {
 		OnMessageAdded(msg);
 		Debug.Log(msg);
 	}

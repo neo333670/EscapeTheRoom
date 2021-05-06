@@ -16,7 +16,7 @@ public class KeyEntity : Entity {
 
 	public override void Inspect () {
 
-		Debug.Log ("A key for something. Maybe can be used later.");
+		m_Game.Showmsg("A key for something. Maybe can be used later.");
 	}
 
 	public override void Interact (Entity entity = null) {
