@@ -17,7 +17,7 @@ public class PaperEntity : Entity {
 		Debug.Log ("There is something on the paper.");
 	}
 
-	public override void Interact () {
+	public override void Interact (Entity entity = null) {
 
 		Debug.Log (string.Format ("Read the paper:<color=white>{0}</color>", m_Content));
 	}

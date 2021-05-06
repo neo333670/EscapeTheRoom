@@ -19,7 +19,7 @@ public class KeyEntity : Entity {
 		Debug.Log ("A key for something. Maybe can be used later.");
 	}
 
-	public override void Interact () {
+	public override void Interact (Entity entity = null) {
 
 		Game.Take (this);
 	}

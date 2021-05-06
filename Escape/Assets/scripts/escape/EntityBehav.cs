@@ -34,6 +34,6 @@ public class EntityBehav : MonoBehaviour
     #region Event Handlers
     void HandleOnSelected(Entity e) { m_Render.material.color = Color.yellow; }
     void HandleDeselected(Entity e) { m_Render.material.color = Color.white; }
-    void HandleOnTaken(Entity e) { }
+    void HandleOnTaken(Entity e) { Destroy(this.gameObject); }
     #endregion
 }

@@ -33,7 +33,7 @@ public class BoxEntity : OpenableEntity {
 		}
 	}
 
-	public override void Interact () {
+	public override void Interact (Entity entity = null) {
 
 		if (m_Closed) {
 

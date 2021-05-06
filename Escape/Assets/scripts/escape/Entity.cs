@@ -34,7 +34,7 @@ public class Entity {
 		Debug.Log ("Hmm...nothing special.");
 	}
 
-	public virtual void Interact () {
+	public virtual void Interact (Entity entity = null) {
 	
 		Debug.Log ("Nothing happened.");
 	}
@@ -46,4 +46,5 @@ public class Entity {
     {
 		OnDeselected(this);
     }
+	public void Take() { OnTaken(this); }
 }

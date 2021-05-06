@@ -3,36 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EscapeGameScene : MonoBehaviour {
+	[SerializeField] GameUI m_GameUI;
 
 	EscapeGame m_Game;
+	public EscapeGame Game { get { return m_Game; } }
+
 	public const float SELECT_RANGE = 10f;
 
 	#region Message Event Handlers
-	void HandleOnMessageAdded(string message) { }
+	void HandleOnMessageAdded(string message) {
+		m_GameUI.ShowMessage(message);
+	}
     #endregion
 
     #region Entity Event Handlers
-	void HandleOnEntitySelected(Entity entity) { }
-	void HandleOnEntityDeselected(Entity entity) { }
+	void HandleOnEntitySelected(Entity entity) {
+		m_GameUI.SetActionVisible(true);
+	}
+	void HandleOnEntityDeselected(Entity entity) {
+		m_GameUI.SetActionVisible(false);
+	}
 	void HandleOnEntityInspected(Entity entity) { }
 	void HandleOnEntityInteracted(Entity entity) { }
-	void HandleOnEntityTaken(Entity entity) { }
-	void HandleOnEntityReleased(Entity entity) { }
+
+	void HandleOnEntityTaken(Entity entity) {
+		m_GameUI.SetActionVisible(false);
+		m_GameUI.UpdateDropdownList();
+	}
+	void HandleOnEntityReleased(Entity entity) {
+		m_GameUI.UpdateDropdownList();
+
+		CreateEntityBehav(entity);
+	}
 	#endregion
 
 	#region Game Event Handlers
 	void HandleOnGameStrated(EscapeGame game) {
 		foreach (var e in m_Game.Entities) {
 			//create Entities GameObject here
-			var entityBehav = GameObject.Instantiate(
-			Resources.Load<EntityBehav>("Prefabs/" + e.Prefabs));
-			entityBehav.transform.position = e.Position;
-			entityBehav.UpdateEntity(e);
+			CreateEntityBehav(e);
 		}
 	}
 	void HandleOnGameFinished(EscapeGame game) { }
 	void HandleOnGameOver(EscapeGame game) { }
-    #endregion
+	#endregion
+
+	void CreateEntityBehav(Entity e) {
+		var entityBehav = GameObject.Instantiate(
+		Resources.Load<EntityBehav>("Prefabs/" + e.Prefabs));
+		entityBehav.transform.position = e.Position;
+		entityBehav.UpdateEntity(e);
+	}
     private void Awake()
     {
 		m_Game = new EscapeGame();
@@ -54,7 +75,7 @@ public class EscapeGameScene : MonoBehaviour {
 
     void Update () {
 
-		if (Input.GetKeyDown(KeyCode.Space)) {
+		if (Input.GetKeyDown(KeyCode.P)) {
 			Detect();
 		}
 
@@ -102,6 +123,7 @@ public class EscapeGameScene : MonoBehaviour {
 			SelectNothing();
 		}
 	}
+
 	void SelectNothing() {
 		m_Game.SelectEntity(null);
 	}
