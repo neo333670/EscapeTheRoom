@@ -31,11 +31,11 @@ public class EscapeGame {
 	public List<Entity> TakenEntities { get { return m_TakenEntities; } }
 
 	public EscapeGame () {
-	
+
 		//MakeGame ();
 
-		Debug.Log ("You are in a locked room. Do something to escape!");
-		Debug.Log ("Press 'N' to select item; " +
+		Showmsg("You are in a locked room. Do something to escape!");
+		Showmsg("Press 'N' to select item; " +
 			"'R' to putback taken item; " +
 			"'Space' to inspect selected item; " +
 			"'Enter' to interact with the selected item.");
@@ -43,7 +43,7 @@ public class EscapeGame {
 
 	void Finish () {
 
-		Debug.Log ("Thanks for playing the game!");
+		Showmsg("Thanks for playing the game!");
 		UnityEditor.EditorApplication.isPlaying = false;
 	}
 
@@ -85,7 +85,6 @@ public class EscapeGame {
 			m_SelectedEntity.Interact (entity);
 		
 		} else {
-
 			Showmsg("You have to select a item first.");
 		}
 	}
@@ -144,7 +143,7 @@ public class EscapeGame {
 
     public void Take(Entity entity)
     {
-		Debug.Log("take ");
+		Showmsg("take ");
         if (m_SelectedEntity == entity)
         {
             m_SelectedEntity.DeSelect();

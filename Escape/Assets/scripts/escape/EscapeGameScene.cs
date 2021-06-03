@@ -95,6 +95,14 @@ public class EscapeGameScene : MonoBehaviour {
 
 			m_Game.PutBack ();
 		}
+
+		if (Input.GetKeyDown(KeyCode.UpArrow)){
+			m_GameUI.LookUpperMessage();
+		}
+		else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+			m_GameUI.LookNextMessage();
+		}
+		
 		if (Input.GetMouseButtonDown(0)) {
 			DetectByMouse();
 		}	

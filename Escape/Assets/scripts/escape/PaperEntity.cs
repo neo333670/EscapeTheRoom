@@ -14,11 +14,11 @@ public class PaperEntity : Entity {
 
 	public override void Inspect () {
 
-		Debug.Log ("There is something on the paper.");
+		m_Game.Showmsg("There is something on the paper.");
 	}
 
 	public override void Interact (Entity entity = null) {
 
-		Debug.Log (string.Format ("Read the paper:<color=white>{0}</color>", m_Content));
+		m_Game.Showmsg(string.Format ("Read the paper:<color=white>{0}</color>", m_Content));
 	}
 }

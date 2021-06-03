@@ -16,18 +16,14 @@ public class BoxEntity : OpenableEntity {
 	public override void Inspect () { 
 
 		if (m_Closed) {
-
-			Debug.Log ("A closed box.");
+			m_Game.Showmsg("A closed box.");
 
 		} else {
-
 			if (m_Content == null) {
-
-				Debug.Log ("An empty box.");
+				m_Game.Showmsg("An empty box.");
 
 			} else {
-
-				Debug.Log ("Something inside the box:\n");
+				m_Game.Showmsg("Something inside the box:\n");
 				m_Content.Inspect ();
 			}
 		}
@@ -38,7 +34,7 @@ public class BoxEntity : OpenableEntity {
 		if (m_Closed) {
 
 			m_Closed = false;
-			Debug.Log ("The box is opened.");
+			m_Game.Showmsg("The box is opened.");
 
 		} else {
 
@@ -48,7 +44,7 @@ public class BoxEntity : OpenableEntity {
 
 			} else {
 
-				Debug.Log ("Something inside the box, interact with it:\n");
+				m_Game.Showmsg("Something inside the box, interact with it:\n");
 				m_Content.Interact ();
 			}
 		}
